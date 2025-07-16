@@ -36,6 +36,7 @@ exports.registerUser = async (req, res) => {
     user: { id: user._id, name: user.name, email: user.email },
   });
 } catch (err) {
+  console.log(err);
   res.status(400).json({ message: 'validation errors' });
 }
 };

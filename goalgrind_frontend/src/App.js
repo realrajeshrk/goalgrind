@@ -1,29 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
-import NavBar from './NavBar';
-
-import Login from './Login';
-import Register from './Register';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Dashboard from './Dashboard';
-import Goals from './Goals';
-import Todos from './Todos';
-import Reminders from './Reminders';  
-
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/navBar'
+import Login from './pages/Login';
+import Register from './pages/Register';
+//import Dashboard from './pages/Dashboard';
+import Goals from './pages/Goals';
+//import Reminders from './pages/Reminders';
+//import Todos from './pages/Todos';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
   return (
-    <Router>
-      <NavBar/>
+    <>
+      <Navbar />
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/goals" element={<Goals />} />
-        <Route path="/todos" element={<Todos />} />
-        <Route path="/reminders" element={<Reminders />} />
+
+        {/* <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        /> */}
+        <Route
+          path="/goals"
+          element={
+            <PrivateRoute>
+              <Goals />
+            </PrivateRoute>
+          }
+        />
+        {/* <Route
+          path="/reminders"
+          element={
+            <PrivateRoute>
+              <Reminders />
+            </PrivateRoute>
+          }
+        /> */}
+        {/* <Route
+          path="/todos"
+          element={
+            <PrivateRoute>
+              <Todos />
+            </PrivateRoute>
+          }
+        /> */}
       </Routes>
-      </Router>      
+    </>
   );
 }
 
