@@ -1,0 +1,2 @@
+cd goalgrind_backend
+npm install

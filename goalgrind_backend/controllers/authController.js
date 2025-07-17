@@ -9,8 +9,8 @@ exports.registerUser = async (req, res) => {
     console.log("🟢 registerUser endpoint hit");
 
   const { name, email, password } = req.body;
-  console.log("name:", name, "email:", email, "password:", password);
   if (!name || !email || !password) {
+    console.log("registeruser - all fields required error");
     return res.status(400).json({ message: 'All fields required' });
   }
 
