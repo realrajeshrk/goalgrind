@@ -6,7 +6,7 @@ const Todo = require('../models/todo');
 exports.getTodos = async (req, res) => {
   try {
     const todos = await Todo.find({ user: req.user._id }).sort({ createdAt: -1 });
-    res.status(200).json(todos);
+    res.status(200).json( {message: "Todos fetched successfully", todos: todos});
   } catch (error) {
     console.error('❌ Error in getTodos:', error.message);
     res.status(500).json({ message: 'Server Error' });

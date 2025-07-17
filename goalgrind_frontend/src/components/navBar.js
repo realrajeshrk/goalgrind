@@ -7,11 +7,10 @@ function Navbar() {
 
   return (
     <nav style={styles.nav}>
-      <h3 style={styles.logo}>GoalGrind</h3>
+       <Link to="/" style={styles.link}>GoalGrind</Link>
       <div style={styles.links}>
         {user ? (
-          <>
-            <Link to="/dashboard" style={styles.link}>Dashboard</Link>
+          <>           
             <Link to="/goals" style={styles.link}>Goals</Link>
             <Link to="/reminders" style={styles.link}>Reminders</Link>
             <Link to="/todos" style={styles.link}>Todos</Link>

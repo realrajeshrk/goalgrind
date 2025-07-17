@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 import api from '../api/axios';
 import { AuthContext } from '../context/AuthContext';
 import './Login.css';
+import { useNavigate } from 'react-router-dom'; // <-- Add this import
 
 function Login() {
   const { login } = useContext(AuthContext);
@@ -9,6 +10,7 @@ function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [info, setInfo] = useState('');
+  const navigate = useNavigate(); // <-- Add this line
 
   const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const handleSubmit = async (e) => {
@@ -29,6 +31,8 @@ function Login() {
       setInfo('Logging in...');
       const res = await api.post('/auth/login', { email, password });
       login(res.data.user, res.data.token);
+      navigate('/'); // <-- Redirect after successful login
+
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
       setInfo('');

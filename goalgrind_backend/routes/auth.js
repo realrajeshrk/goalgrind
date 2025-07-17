@@ -4,5 +4,4 @@ const { registerUser, loginUser, regUser } = require('../controllers/authControl
 console.log('auth file loaded')
 router.post('/register', registerUser);
 router.post('/login', loginUser);
-router.post('/reg', regUser);
 module.exports = router;

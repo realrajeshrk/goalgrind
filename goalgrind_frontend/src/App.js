@@ -2,10 +2,10 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/navBar'
 import Login from './pages/Login';
 import Register from './pages/Register';
-//import Dashboard from './pages/Dashboard';
+import Dashboard from './pages/Dashboard';
 import Goals from './pages/Goals';
-//import Reminders from './pages/Reminders';
-//import Todos from './pages/Todos';
+import Reminders from './pages/Reminder';
+import Todos from './pages/Todos';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
@@ -16,14 +16,14 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* <Route
+        <Route
           path="/"
           element={
             <PrivateRoute>
               <Dashboard />
             </PrivateRoute>
           }
-        /> */}
+        />
         <Route
           path="/goals"
           element={
@@ -32,22 +32,22 @@ function App() {
             </PrivateRoute>
           }
         />
-        {/* <Route
+        <Route
           path="/reminders"
           element={
             <PrivateRoute>
               <Reminders />
             </PrivateRoute>
           }
-        /> */}
-        {/* <Route
+        />
+        <Route
           path="/todos"
           element={
             <PrivateRoute>
               <Todos />
             </PrivateRoute>
           }
-        /> */}
+        />
       </Routes>
     </>
   );

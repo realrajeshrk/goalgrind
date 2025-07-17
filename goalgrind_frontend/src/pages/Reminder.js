@@ -20,9 +20,7 @@ function Reminder() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const reminderData = { title, remindAt, isDone };
-
     try {
       if (editingId) {
         await api.put(`/reminders/${editingId}`, reminderData);
@@ -81,6 +79,7 @@ function Reminder() {
           <input
             type="checkbox"
             checked={isDone}
+            disabled={editingId === 'Add Reminder'}
             onChange={(e) => setIsDone(e.target.checked)}
           />
           Done

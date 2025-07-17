@@ -60,7 +60,7 @@ function Register() {
       const res = await api.post('/auth/register', {
         name,
         email,
-        password,
+        password
       });
       login(res.data.user, res.data.token);
     } catch (err) {

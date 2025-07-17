@@ -3,16 +3,13 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-exports.regUser = (req, res) => {
-  console.log("🟢 registerUser endpoint hit");
-  res.send("OK from controller");
-};
+
 
 exports.registerUser = async (req, res) => {
     console.log("🟢 registerUser endpoint hit");
 
   const { name, email, password } = req.body;
-
+  console.log("name:", name, "email:", email, "password:", password);
   if (!name || !email || !password) {
     return res.status(400).json({ message: 'All fields required' });
   }
@@ -25,7 +22,7 @@ exports.registerUser = async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   
   try {
-  const user = await User.create({ name, email, password: hashedPassword }, { runValidators: true });
+  const user = await User.create({ name:name, email:email, password: hashedPassword });
 
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
     expiresIn: '1d',
@@ -36,6 +33,8 @@ exports.registerUser = async (req, res) => {
     user: { id: user._id, name: user.name, email: user.email },
   });
 } catch (err) {
+  console.error('❌ Error in registerUser:', err.message);
+  console.error(err);
   res.status(400).json({ message: 'validation errors' });
 }
 };

@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import api from '../api/axios';
 import './Dashboard.css';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 function Dashboard() {
   const [goals, setGoals] = useState([]);
   const [todos, setTodos] = useState([]);
   const [reminders, setReminders] = useState([]);
-
+  const { user } = useContext(AuthContext);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,7 +29,7 @@ function Dashboard() {
 
   return (
     <div className="dashboard-container">
-      <h1 className="dash-title">🌟 Welcome to Your Dashboard 🌟</h1>
+      <h1 className="dash-title">🌟 Hi {user.name}, Welcome to Your Dashboard 🌟</h1>
       <div className="dashboard-stats">
         <div className="stat-card goal-grad">
           <h2>Goals</h2>
