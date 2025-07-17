@@ -1,0 +1,116 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+  position: relative;
+}
+
+.login-form {
+  background: rgba(255,255,255,0.98);
+  padding: 2.5rem 2.2rem 2.5rem 2.2rem;
+  border-radius: 16px;
+  box-shadow: 0 18px 40px rgba(48,78,190,0.12), 0 2px 4px rgba(52,152,219,0.13);
+  min-width: 340px;
+  z-index: 3;
+  position: relative;
+  animation: fadeInDown 0.6s;
+}
+
+@keyframes fadeInDown {
+  0% { transform: translateY(-70px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.login-title {
+  font-size: 2.1rem;
+  margin-bottom: 0.5rem;
+  color: #2467e0;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.login-subtitle {
+  color: #585f69;
+  margin-bottom: 1.45rem;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.05rem;
+  font-size: 1rem;
+}
+
+.login-field label {
+  margin-bottom: 0.35rem;
+  font-weight: 500;
+  color: #395886;
+}
+
+.login-input {
+  padding: 0.65rem 1rem;
+  border: 1.5px solid #e7f0fe;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.18s;
+  background: #f7faff;
+  font-weight: 500;
+  color: #222a38;
+}
+
+.login-input:focus {
+  border-color: #70a1ff;
+  background: #f0f7ff;
+}
+
+.login-btn {
+  font-size: 1.1rem;
+  width: 100%;
+  background: linear-gradient(94deg, #2980ef 0%, #04d9fc 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.85rem 0;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 0.6rem;
+  box-shadow: 0 1.5px 10px rgba(42,128,255,0.09);
+  transition: background 0.17s, box-shadow 0.17s;
+}
+
+.login-btn:hover, .login-btn:focus {
+  background: linear-gradient(94deg, #0777ea 0%, #09bee6 100%);
+  box-shadow: 0 3px 16px rgba(42,128,255,0.16);
+}
+
+.login-error {
+  color: #ef4b70;
+  text-align: left;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+  font-size: 1.03rem;
+}
+
+.login-info {
+  color: #227bb8;
+  text-align: left;
+  margin-bottom: 0.8rem;
+  font-size: 0.97rem;
+  font-weight: 500;
+}
+
+.login-bg-decor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 310px;
+  height: 310px;
+  z-index: 1;
+  background: radial-gradient(circle, #aeeaff 0%, #198eee10 75%);
+  filter: blur(16px);
+}

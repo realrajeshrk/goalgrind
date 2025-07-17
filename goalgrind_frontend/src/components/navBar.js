@@ -11,7 +11,7 @@ function Navbar() {
       <div style={styles.links}>
         {user ? (
           <>
-            <Link to="/" style={styles.link}>Dashboard</Link>
+            <Link to="/dashboard" style={styles.link}>Dashboard</Link>
             <Link to="/goals" style={styles.link}>Goals</Link>
             <Link to="/reminders" style={styles.link}>Reminders</Link>
             <Link to="/todos" style={styles.link}>Todos</Link>

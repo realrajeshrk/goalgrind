@@ -1,57 +1,75 @@
 import { useState, useContext } from 'react';
 import api from '../api/axios';
 import { AuthContext } from '../context/AuthContext';
+import './Login.css';
 
 function Login() {
   const { login } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [info, setInfo] = useState('');
 
-  const isValidEmail = (email) => {
-    // Basic email pattern check
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
-
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setInfo('');
 
     if (!isValidEmail(email)) {
-      alert('Please enter a valid email address.');
+      setError('Please enter a valid email address.');
       return;
     }
-
     if (!password) {
-      alert('Password is required.');
+      setError('Password is required.');
       return;
     }
 
     try {
+      setInfo('Logging in...');
       const res = await api.post('/auth/login', { email, password });
       login(res.data.user, res.data.token);
     } catch (err) {
-      alert(err.response?.data?.message || 'Login failed');
+      setError(err.response?.data?.message || 'Login failed');
+      setInfo('');
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Email"
+    <div className="login-container">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <h2 className="login-title">Welcome Back</h2>
+        <p className="login-subtitle">Sign in to continue your journey</p>
+        <div className="login-field">
+          <label>Email</label>
+          <input
+            className="login-input"
+            type="email"
+            placeholder="your@email.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+            autoComplete="username"
         />
-        <input
-          type="password"
-          placeholder="Password"
+        </div>
+        <div className="login-field">
+          <label>Password</label>
+          <input
+            className="login-input"
+            type="password"
+            placeholder="••••••••"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+            autoComplete="current-password"
         />
-        <button type="submit">Login</button>
+    </div>
+        {error && <div className="login-error">{error}</div>}
+        {info && <div className="login-info">{info}</div>}
+        <button className="login-btn" type="submit">Login</button>
       </form>
+      <div className="login-bg-decor"></div>
     </div>
   );
 }
 
 export default Login;
+
