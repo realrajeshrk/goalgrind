@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/goalgrind/static/css/main.516c87e4.css",
-    "main.js": "/goalgrind/static/js/main.0fd3425e.js",
-    "static/js/453.6b033eb3.chunk.js": "/goalgrind/static/js/453.6b033eb3.chunk.js",
-    "index.html": "/goalgrind/index.html",
-    "main.516c87e4.css.map": "/goalgrind/static/css/main.516c87e4.css.map",
-    "main.0fd3425e.js.map": "/goalgrind/static/js/main.0fd3425e.js.map",
-    "453.6b033eb3.chunk.js.map": "/goalgrind/static/js/453.6b033eb3.chunk.js.map"
+    "main.css": "/static/css/main.516c87e4.css",
+    "main.js": "/static/js/main.cd734520.js",
+    "static/js/453.6b033eb3.chunk.js": "/static/js/453.6b033eb3.chunk.js",
+    "index.html": "/index.html",
+    "main.516c87e4.css.map": "/static/css/main.516c87e4.css.map",
+    "main.cd734520.js.map": "/static/js/main.cd734520.js.map",
+    "453.6b033eb3.chunk.js.map": "/static/js/453.6b033eb3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.516c87e4.css",
-    "static/js/main.0fd3425e.js"
+    "static/js/main.cd734520.js"
   ]
 }

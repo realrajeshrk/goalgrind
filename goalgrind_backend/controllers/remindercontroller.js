@@ -50,8 +50,8 @@ exports.updateReminder = async (req, res) => {
 }
 
 exports.deleteReminder = async (req, res) => {
-    const reminder = await Reminder.findOneAndDelete({ id: req.params.id , user: req.user._id});
-
+    const reminder = await Reminder.findOneAndDelete({ _id: req.params.id , user: req.user._id});
+    
     if(!reminder)
     return res.status(500).json({ message: "No such reminder"})
 

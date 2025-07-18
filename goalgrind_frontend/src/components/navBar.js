@@ -28,11 +28,7 @@ function Navbar() {
   // So only Goals, Reminders, and Logout/toggle in hamburger
   // Dashboard link is replaced by the brand/home, so it's always shown
 
-  // For mobile UX, render only first 3 links and put others under "More" if required
-  const visibleLinks = links.slice(0, 3);
-  // (If you want a generic "More" dropdown, expand here. For now, just first 3.)
 
-  // Actual rendering:
   return (
     <nav className="navbar">
       <Link to={homeLink} className="navbar-logo" onClick={handleLinkClick}>
@@ -49,7 +45,7 @@ function Navbar() {
         {user
           ? (
             <>
-              {visibleLinks.map(({ to, label }) => (
+              {links.map(({ to, label }) => (
                 <Link to={to} className="navbar-link" key={to} onClick={handleLinkClick}>
                   {label}
                 </Link>
@@ -59,7 +55,7 @@ function Navbar() {
               </button>
             </>
           ) : (
-            visibleLinks.map(({ to, label }) => (
+            links.map(({ to, label }) => (
               <Link to={to} className="navbar-link" key={to} onClick={handleLinkClick}>
                 {label}
               </Link>
