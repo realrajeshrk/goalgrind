@@ -75,7 +75,7 @@ function Dashboard() {
           <ul>
             {todos.slice(0, 3).map(todo => (
               <li key={todo._id}>
-                <b>{todo.task}</b> <span className="date-chip">{todo.dueDate?.replace('T',' ').slice(0,16)}</span> 
+                <b>{todo.task}</b> <span className="date-chip">{formatDateTime(todo.dueDate)}</span> 
                 {todo.isCompleted ? '✅' : '⌛'}
               </li>
             ))}

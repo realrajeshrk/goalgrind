@@ -14,6 +14,7 @@ function Navbar() {
   // Compose links based on auth status
   const links = user
     ? [
+        { to: "/dashboard", label: "Dashboard" },
         { to: "/goals", label: "Goals" },
         { to: "/reminders", label: "Reminders" },
         { to: "/todos", label: "Todos" },
