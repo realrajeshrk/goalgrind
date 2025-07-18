@@ -1,6 +1,20 @@
 import { useEffect, useState } from 'react';
 import api from '../api/axios';
 import './Goals.css';
+function formatDisplayDate(dateString) {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  const month = date.toLocaleString('en-US', { month: 'long' });
+
+  const day = date.getDate();
+  let suffix = 'th';
+  if (day % 10 === 1 && day !== 11) suffix = 'st';
+  else if (day % 10 === 2 && day !== 12) suffix = 'nd';
+  else if (day % 10 === 3 && day !== 13) suffix = 'rd';
+
+  const year = date.getFullYear();
+  return `${month} ${day}${suffix}, ${year}`;
+}
 
 function Goals() {
   const [goals, setGoals] = useState([]);
@@ -183,7 +197,7 @@ function Goals() {
                     <p className="goal-desc">{goal.description}</p>
                     <div className="goal-date">
                       🎯 Target Date:{' '}
-                      {goal.targetDate ? goal.targetDate.slice(0, 10) : '-'}
+                      {goal.targetDate ? formatDisplayDate(goal.targetDate) : '-'}
                     </div>
                   </div>
                   <div className="goal-actions">

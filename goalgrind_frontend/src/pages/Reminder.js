@@ -127,6 +127,7 @@ function Reminder() {
         />
         <input
           type="datetime-local"
+          palceholder= "Remind at"
           value={remindAt}
           onChange={(e) => setRemindAt(e.target.value)}
           required

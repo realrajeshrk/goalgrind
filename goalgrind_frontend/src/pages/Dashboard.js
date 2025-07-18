@@ -3,6 +3,16 @@ import api from '../api/axios';
 import './Dashboard.css';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
+
+function formatDateTime(dateString) {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toLocaleString('en-US', {
+    month: 'short', day: 'numeric', year: 'numeric',
+    hour: 'numeric', minute: '2-digit', hour12: true,
+  });
+}
 
 function Dashboard() {
   const [goals, setGoals] = useState([]);
@@ -30,22 +40,22 @@ function Dashboard() {
   return (
     <div className="dashboard-container">
       <h1 className="dash-title">🌟 Hi {user.name}, Welcome to Your Dashboard 🌟</h1>
-      <div className="dashboard-stats">
-        <div className="stat-card goal-grad">
+       <div className="dashboard-stats">
+        <Link to="/goals" className="stat-card goal-grad stat-link">
           <h2>Goals</h2>
           <div className="stat-num">{goals.length}</div>
           <span>Actively Pursued</span>
-        </div>
-        <div className="stat-card todo-grad">
+        </Link>
+        <Link to="/todos" className="stat-card todo-grad stat-link">
           <h2>Todos</h2>
           <div className="stat-num">{todos.length}</div>
           <span>Your Task List</span>
-        </div>
-        <div className="stat-card remind-grad">
+        </Link>
+        <Link to="/reminders" className="stat-card remind-grad stat-link">
           <h2>Reminders</h2>
           <div className="stat-num">{reminders.length}</div>
           <span>Stay On Track</span>
-        </div>
+        </Link>
       </div>
 
       <div className="dashboard-lists">
@@ -54,7 +64,7 @@ function Dashboard() {
           <ul>
             {goals.slice(0, 3).map(goal => (
               <li key={goal._id}>
-                <b>{goal.title}:</b> {goal.description} <span className="date-chip">{goal.targetDate?.slice(0,10)}</span>
+                <b>{goal.title}:</b> {goal.description} <span className="date-chip">{formatDateTime(goal.targetDate)}</span>
               </li>
             ))}
             {goals.length === 0 && <li>No goals yet</li>}
@@ -65,7 +75,8 @@ function Dashboard() {
           <ul>
             {todos.slice(0, 3).map(todo => (
               <li key={todo._id}>
-                <b>{todo.task}</b> <span className="date-chip">{todo.dueDate?.replace('T',' ').slice(0,16)}</span> {todo.isCompleted ? '✅' : '⌛'}
+                <b>{todo.task}</b> <span className="date-chip">{todo.dueDate?.replace('T',' ').slice(0,16)}</span> 
+                {todo.isCompleted ? '✅' : '⌛'}
               </li>
             ))}
             {todos.length === 0 && <li>No todos yet</li>}
@@ -78,7 +89,8 @@ function Dashboard() {
               .slice(0, 3)
               .map(rem => (
                 <li key={rem._id}>
-                  <b>{rem.title}</b> <span className="date-chip">{rem.remindAt?.replace('T',' ').slice(0,16)}</span> {rem.isDone ? '✅' : '⏰'}
+                  <b>{rem.title}</b> <span className="date-chip">{formatDateTime(rem.remindAt)}</span>
+                  {rem.isDone ? '✅' : '⏰'}
                 </li>
               ))}
             {reminders.length === 0 && <li>No reminders yet</li>}

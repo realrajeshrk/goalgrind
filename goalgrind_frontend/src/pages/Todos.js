@@ -43,7 +43,7 @@ function TodoCard({ todo, isEditing, onEdit, onSave, onCancel, onDelete, animate
             </div>
             {todo.dueDate && (
               <div className="todo-duedate">
-                🗓 {todo.dueDate.replace('T', ' ').slice(0, 16)}
+                🗓 {formatDateTime(todo.dueDate)}
               </div>
             )}
           </div>
@@ -140,6 +140,7 @@ function AddTodoRow({ onAdd, loading }) {
           <input
             type="datetime-local"
             className="todo-input"
+            placeholder='Due date'
             value={dueDate}
             onChange={e => setDueDate(e.target.value)}
             disabled={loading}
