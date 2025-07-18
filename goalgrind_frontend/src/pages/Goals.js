@@ -4,11 +4,15 @@ import './Goals.css';
 
 function Goals() {
   const [goals, setGoals] = useState([]);
+  // For new goal (add)
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [targetDate, setTargetDate] = useState('');
+  // For inline edit
   const [editingId, setEditingId] = useState(null);
-
+  const [editTitle, setEditTitle] = useState('');
+  const [editDescription, setEditDescription] = useState('');
+  const [editTargetDate, setEditTargetDate] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
@@ -37,25 +41,16 @@ function Goals() {
     }
   };
 
-  const handleSubmit = async (e) => {
+  // Add new goal
+  const handleAddSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (editingId) {
-        await api.put(`/goals/${editingId}`, {
-          title,
-          description,
-          targetDate,
-        });
-        setSuccessMsg('Goal updated!');
-        setEditingId(null);
-      } else {
-        await api.post('/goals', {
-          title,
-          description,
-          targetDate,
-        });
-        setSuccessMsg('Goal added!');
-      }
+      await api.post('/goals', {
+        title,
+        description,
+        targetDate,
+      });
+      setSuccessMsg('Goal added!');
       setTitle('');
       setDescription('');
       setTargetDate('');
@@ -67,11 +62,40 @@ function Goals() {
     }
   };
 
+  // Inline edit mode
   const handleEdit = (goal) => {
-    setTitle(goal.title);
-    setDescription(goal.description);
-    setTargetDate(goal.targetDate ? goal.targetDate.slice(0, 10) : '');
     setEditingId(goal._id);
+    setEditTitle(goal.title);
+    setEditDescription(goal.description);
+    setEditTargetDate(goal.targetDate ? goal.targetDate.slice(0, 10) : '');
+    setErrorMsg('');
+    setSuccessMsg('');
+  };
+
+  const handleEditChange = (field, value) => {
+    if (field === 'title') setEditTitle(value);
+    else if (field === 'description') setEditDescription(value);
+    else if (field === 'targetDate') setEditTargetDate(value);
+  };
+
+  const handleEditSubmit = async (goalId) => {
+    try {
+      await api.put(`/goals/${goalId}`, {
+        title: editTitle,
+        description: editDescription,
+        targetDate: editTargetDate
+      });
+      setSuccessMsg('Goal updated!');
+      setEditingId(null);
+      fetchGoals();
+    } catch {
+      setErrorMsg('Failed to update goal.');
+      setSuccessMsg('');
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditingId(null);
     setErrorMsg('');
     setSuccessMsg('');
   };
@@ -87,66 +111,87 @@ function Goals() {
     }
   };
 
-  const handleCancel = () => {
-    setEditingId(null);
-    setTitle('');
-    setDescription('');
-    setTargetDate('');
-    setErrorMsg('');
-    setSuccessMsg('');
-  };
-
   return (
     <div className="goals-container">
-      <form className="goal-form" onSubmit={handleSubmit} autoComplete="off">
+      {/* Form for adding only */}
+      <form className="goal-form" onSubmit={handleAddSubmit} autoComplete="off">
         <input
-          placeholder="Title"
+          placeholder="Title "
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
         />
-        <input
-          placeholder="Description"
+        <textarea
+          placeholder="Description (details about your goal)"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
+          rows={4}
+          className="goal-desc-input"
         />
         <input
           type="date"
           value={targetDate}
           onChange={(e) => setTargetDate(e.target.value)}
           required
+          placeholder="Target Date"
         />
-        <button type="submit">{editingId ? 'Update' : 'Add'} Goal</button>
-        {editingId && (
-          <button type="button" className="cancel-btn" onClick={handleCancel}>
-            Cancel
-          </button>
-        )}
+        <button type="submit">Add Goal</button>
       </form>
       {(errorMsg || successMsg) && (
         <div className={errorMsg ? 'alert-error' : 'alert-success'}>
           {errorMsg ? errorMsg : successMsg}
         </div>
       )}
-
-      {/* Only show cards if goals exist */}
       {goals.length > 0 && (
         <div className="goal-list-vertical">
           {goals.map((goal) => (
             <div key={goal._id} className="goal-card-vertical">
-              <div>
-                <h3 className="goal-title">{goal.title}</h3>
-                <p className="goal-desc">{goal.description}</p>
-                <div className="goal-date">
-                  🎯 Target Date:{' '}
-                  {goal.targetDate ? goal.targetDate.slice(0, 10) : '-'}
+              {editingId === goal._id ? (
+                <div>
+                  <input
+                    value={editTitle}
+                    onChange={e => handleEditChange('title', e.target.value)}
+                    placeholder="Title"
+                    required
+                  />
+                  <textarea
+                    value={editDescription}
+                    onChange={e => handleEditChange('description', e.target.value)}
+                    placeholder="Description"
+                    required
+                    rows={4}
+                    className="goal-desc-input"
+                  />
+                  <input
+                    type="date"
+                    value={editTargetDate}
+                    onChange={e => handleEditChange('targetDate', e.target.value)}
+                    required
+                  />
+                  <div className="goal-actions">
+                    <button onClick={() => handleEditSubmit(goal._id)}>Save</button>
+                    <button type="button" className="cancel-btn" onClick={handleCancelEdit}>
+                      Cancel
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div className="goal-actions">
-                <button onClick={() => handleEdit(goal)}>✏️</button>
-                <button onClick={() => handleDelete(goal._id)}>🗑️</button>
-              </div>
+              ) : (
+                <>
+                  <div>
+                    <h3 className="goal-title">{goal.title}</h3>
+                    <p className="goal-desc">{goal.description}</p>
+                    <div className="goal-date">
+                      🎯 Target Date:{' '}
+                      {goal.targetDate ? goal.targetDate.slice(0, 10) : '-'}
+                    </div>
+                  </div>
+                  <div className="goal-actions">
+                    <button onClick={() => handleEdit(goal)}>✏️</button>
+                    <button onClick={() => handleDelete(goal._id)}>🗑️</button>
+                  </div>
+                </>
+              )}
             </div>
           ))}
         </div>

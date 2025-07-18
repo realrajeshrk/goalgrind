@@ -15,15 +15,12 @@ function App() {
   const { user } = useContext(AuthContext);
 
   return (
-    <>
+    <div className="font-sans">
       <Navbar />
       <Routes>
-        {/* Public routes */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={!user ? <Login /> : <Navigate to="/dashboard" />} />
         <Route path="/register" element={!user ? <Register /> : <Navigate to="/dashboard" />} />
-
-        {/* Private routes */}
         <Route
           path="/dashboard"
           element={
@@ -56,12 +53,11 @@ function App() {
             </PrivateRoute>
           }
         />
-
-        {/* Fallback for unknown routes */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-    </>
+    </div>
   );
 }
 
 export default App;
+

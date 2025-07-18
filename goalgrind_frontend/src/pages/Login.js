@@ -31,7 +31,7 @@ function Login() {
       setInfo('Logging in...');
       const res = await api.post('/auth/login', { email, password });
       login(res.data.user, res.data.token);
-      navigate('/'); // <-- Redirect after successful login
+      navigate('/dashboard'); // <-- Redirect after successful login
 
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
