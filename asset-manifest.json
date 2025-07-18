@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/goalgrind/static/css/main.516c87e4.css",
-    "main.js": "/goalgrind/static/js/main.d31d7451.js",
+    "main.js": "/goalgrind/static/js/main.0fd3425e.js",
     "static/js/453.6b033eb3.chunk.js": "/goalgrind/static/js/453.6b033eb3.chunk.js",
     "index.html": "/goalgrind/index.html",
     "main.516c87e4.css.map": "/goalgrind/static/css/main.516c87e4.css.map",
-    "main.d31d7451.js.map": "/goalgrind/static/js/main.d31d7451.js.map",
+    "main.0fd3425e.js.map": "/goalgrind/static/js/main.0fd3425e.js.map",
     "453.6b033eb3.chunk.js.map": "/goalgrind/static/js/453.6b033eb3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.516c87e4.css",
-    "static/js/main.d31d7451.js"
+    "static/js/main.0fd3425e.js"
   ]
 }
