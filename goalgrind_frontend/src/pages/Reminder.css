@@ -11,6 +11,44 @@
   animation: fadeIn 0.65s cubic-bezier(.47,.84,.78,.98);
 }
 
+.reminder-view {
+  display: flex;
+  flex-direction: column;
+  gap: 0.27em;
+}
+.reminder-main-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.06em;
+  font-weight: 600;
+  gap: 1em;
+}
+.reminder-title {
+  flex: 1;
+  color: #25487b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.reminder-date {
+  color: #3c6ca6;
+  font-size: 0.99em;
+  min-width: 120px;
+  text-align: right;
+}
+.reminder-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  margin-top: 1px;
+  margin-left: 2px;
+}
+.reminder-status {
+  font-size: 1.01em;
+  margin-right: 0.4em;
+}
+
 @media (max-width: 600px) {
   .reminder-container {
     margin: 0;
@@ -198,16 +236,68 @@
 
 .reminder-inline-edit {
   display: flex;
-  gap: 0.7em;
-  flex-wrap: wrap;
-  align-items: center;
+  flex-direction: column;
+  gap: 0.5em;
+  flex-wrap: nowrap;
+  align-items: stretch;
   width: 100%;
   background: #e2eaff;
-  padding: 0.41em .3em .33em .75em;
+  padding: 0.9em 0.6em 0.7em 1em;
   border-radius: 10px;
   animation: fadeIn 0.23s;
 }
 
+.edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.19em;
+  margin-bottom: 0.05em;
+}
+
+.edit-field label {
+  font-weight: 500;
+  color: #25487b;
+  font-size: 1em;
+  margin-bottom: 0.09em;
+}
+.edit-field.checkbox label {
+  flex-direction: row;
+  gap: 6px;
+  font-weight: normal;
+  color: #365476;
+  background: transparent;
+  padding-left: 0;
+}
+
+.edit-actions-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 0.7em;
+  margin-top: 0.37em;
+}
+
+.edit-actions-row .save-btn,
+.edit-actions-row .cancel-btn {
+  margin-right: 9px;
+  padding: 7px 18px;
+}
+.edit-actions-row .cancel-btn {
+  margin-right: 0;
+}
+
+@media (max-width: 480px) {
+  .reminder-inline-edit {
+    padding: 0.45em 0.2em 0.56em 0.5em;
+  }
+  .edit-actions-row .save-btn,
+  .edit-actions-row .cancel-btn {
+    width: 100%;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
 .reminder-inline-edit input[type="text"],
 .reminder-inline-edit input[type="datetime-local"] {
   padding: .4em .84em;

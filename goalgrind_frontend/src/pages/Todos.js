@@ -1,6 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import api from '../api/axios';
 import './Todos.css';
+function formatDateTime(dtString) {
+  if (!dtString) return '';
+  const date = new Date(dtString);
+  // Example: Jun 7, 3:05 PM
+  return date.toLocaleString(undefined, {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  });
+}
 
 function TodoCard({ todo, isEditing, onEdit, onSave, onCancel, onDelete, animate }) {
   const [editTask, setEditTask] = useState(todo.task);
@@ -14,7 +26,7 @@ function TodoCard({ todo, isEditing, onEdit, onSave, onCancel, onDelete, animate
   }, [todo, isEditing]);
 
   return (
-    <div
+     <div
       className={
         `todo-card-vertical${todo.isCompleted ? ' completed' : ''}${animate ? ' todo-animate-in' : ''}`
       }
@@ -45,47 +57,54 @@ function TodoCard({ todo, isEditing, onEdit, onSave, onCancel, onDelete, animate
           </div>
         </>
       ) : (
-        <form
-          className="todo-inline-edit-form"
-          onSubmit={e => {
-            e.preventDefault();
-            onSave(todo._id, {
-              task: editTask,
-              dueDate: editDueDate,
-              isCompleted: editCompleted
-            });
-          }}
-        >
-          <div className="todo-form-row">
-            <input
-              className="todo-input"
-              value={editTask}
-              autoFocus
-              onChange={e => setEditTask(e.target.value)}
-              required
-              style={{marginBottom: 6}}
-            />
-            <input
-              className="todo-input"
-              type="datetime-local"
-              value={editDueDate}
-              onChange={e => setEditDueDate(e.target.value)}
-            />
-          </div>
-          <div className="todo-inline-edit-actions">
-            <label className="todo-checkbox-label">
-              <input
-                type="checkbox"
-                checked={editCompleted}
-                onChange={e => setEditCompleted(e.target.checked)}
-              />
-              Completed
-            </label>
-            <button type="submit" className="todo-btn todo-inline-save" title="Save">💾</button>
-            <button type="button" className="todo-btn-cancel todo-inline-cancel" onClick={onCancel}>✖</button>
-          </div>
-        </form>
-      )}
+  <form
+    className="todo-inline-edit-form-vertical"
+    onSubmit={e => {
+      e.preventDefault();
+      onSave(todo._id, {
+        task: editTask,
+        dueDate: editDueDate,
+        isCompleted: editCompleted
+      });
+    }}
+  >
+    <div className="todo-card-content">
+      <label style={{display:'block', marginBottom:8}}>
+        Reminder
+        <input
+          className="todo-input"
+          value={editTask}
+          autoFocus
+          onChange={e => setEditTask(e.target.value)}
+          required
+          style={{marginTop: 4}}
+        />
+      </label>
+      <label style={{display:'block', marginBottom:8}}>
+        Date
+        <input
+          className="todo-input"
+          type="datetime-local"
+          value={editDueDate}
+          onChange={e => setEditDueDate(e.target.value)}
+          style={{marginTop: 4}}
+        />
+      </label>
+      <label className="todo-checkbox-label" style={{display:'block', marginBottom:20, marginLeft:0}}>
+        <input
+          type="checkbox"
+          checked={editCompleted}
+          onChange={e => setEditCompleted(e.target.checked)}
+        />
+        Completed 
+      </label>
+      <div className="todo-inline-edit-actions-horizontal">
+        <button type="submit" className="todo-btn todo-inline-save" title="Save">Save 💾</button>
+        <button type="button" className="todo-btn-cancel todo-inline-cancel" onClick={onCancel}>Cancel ✖</button>
+      </div>
+    </div>
+  </form>
+)}
     </div>
   );
 }
@@ -128,16 +147,7 @@ function AddTodoRow({ onAdd, loading }) {
         </div>
       </div>
       <div className="todo-actions">
-        <button className="todo-btn todo-add-btn" type="submit" disabled={loading}>＋</button>
-        <label className="todo-checkbox-label" style={{fontSize:'1em', marginTop:4}}>
-          <input
-            type="checkbox"
-            checked={isCompleted}
-            onChange={e => setIsCompleted(e.target.checked)}
-            disabled={loading}
-          /> 
-          Completed
-        </label>
+        <button className="todo-btn todo-add-btn" type="submit" disabled={loading}>Add</button>
       </div>
     </form>
   );
@@ -185,7 +195,7 @@ function Todos() {
       setMessage('Todo added!');
       setLoading(false);
       await fetchTodos();
-      animateTodoId(res.data.todo._id);
+      animateTodoId(res.data._id);
     } catch(e) {
       setLoading(false);
       setError('Failed to add todo.');

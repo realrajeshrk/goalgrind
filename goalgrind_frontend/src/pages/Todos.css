@@ -8,6 +8,49 @@
   padding: 0 2vw;
 }
 
+.todo-single-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+css src/styles/Todos.css
+/* Inline edit form vertical layout */
+.todo-inline-edit-form-vertical {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0;
+  align-items: stretch;
+}
+.todo-inline-edit-form-vertical .todo-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+}
+.todo-inline-edit-form-vertical label {
+  font-size: 1em;
+  color: #6b629a;
+  font-weight: 500;
+}
+
+.todo-inline-edit-actions-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.todo-inline-edit-actions-vertical button {
+  width: 36px;
+  height: 36px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
 /* Add amazing entrance animation */
 @keyframes todo-pop-in {
   0% { opacity: 0; transform: translateY(30px) scale(0.95);}
@@ -113,17 +156,19 @@
   cursor: pointer;
   transition: background 0.12s, color 0.20s;
   color: #675ad8;
+  margin-right: 8px;
+  padding: 6px 16px;
 }
 .todo-action-btn:hover,
 .todo-add-btn:hover,
 .todo-inline-save:hover {
   background: #ebe7fd;
-  color: #483a94;
 }
+
 .todo-btn.todo-add-btn {
   font-size: 1.15em;
   background: #ebf5ff;
-  color: #2e7f38;
+  color: #2ad6d6;
   min-width: 36px;
   border: 1.5px solid #e2e9f980;
   padding: 8px 10px;
@@ -131,10 +176,11 @@
 
 .todo-btn-cancel, .todo-inline-cancel {
   background: #faedee;
-  color: #b44949;
+  color: #c77474;
   font-size: 1em;
   border: 1px solid #f7d3d3;
   padding: 7px 13px;
+  margin-right: 0 !important;
 }
 .todo-btn-cancel:hover, .todo-inline-cancel:hover {
   background: #efd9d9;
@@ -215,6 +261,8 @@
   .todo-task-title { font-size: 1.02em;}
   .todo-actions { min-width: 0;}
 }
+
+
 
 /* On very thin screens, stack actions under content */
 @media (max-width: 380px) {

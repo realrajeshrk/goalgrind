@@ -2,6 +2,18 @@ import { useEffect, useState } from 'react';
 import api from '../api/axios';
 import './Reminder.css';
 
+function formatDisplayDate(dateStr) {
+  if (!dateStr) return '';
+  const date = new Date(dateStr);
+  return date.toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  }).replace(',', '');
+}
+
 function Reminder() {
   const [reminders, setReminders] = useState([]);
   const [title, setTitle] = useState('');
@@ -120,15 +132,6 @@ function Reminder() {
           required
           disabled={adding}
         />
-        <label>
-          <input
-            type="checkbox"
-            checked={isDone}
-            onChange={(e) => setIsDone(e.target.checked)}
-            disabled={adding}
-          />
-          Done
-        </label>
         <button type="submit" disabled={adding || !title || !remindAt}>
           {adding ? 'Adding...' : 'Add'}
         </button>
@@ -147,88 +150,97 @@ function Reminder() {
               }
             >
               {!isEditing ? (
-                <div className="reminder-view">
-                  <span className="reminder-title">{reminder.title}</span>
-                  <span className="reminder-date">
-                    🕑 {reminder.remindAt?.replace('T', ' ').slice(0, 16)}
-                  </span>
-                  <span className="reminder-status">
-                    {reminder.isDone ? '✅' : '⏰'}
-                  </span>
-                  <div className="reminder-actions">
-                    <button
-                      type="button"
-                      onClick={() => handleStartEdit(reminder)}
-                      aria-label="Edit"
-                      title="Edit"
-                      disabled={!!editingId}
-                    >
-                      ✏️
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => deleteReminder(reminder._id)}
-                      aria-label="Delete"
-                      title="Delete"
-                      disabled={loadingId === reminder._id}
-                    >
-                      ❌
-                    </button>
-                  </div>
-                </div>
-              ) : (
+  <div className="reminder-view">
+    <div className="reminder-main-row">
+      <span className="reminder-title">{reminder.title}</span>
+      <span className="reminder-date">
+        {formatDisplayDate(reminder.remindAt)}
+      </span>
+    </div>
+    <div className="reminder-actions-row">
+      <span className="reminder-status">
+        {reminder.isDone ? '✅' : '⏰'}
+      </span>
+      <button
+        type="button"
+        onClick={() => handleStartEdit(reminder)}
+        aria-label="Edit"
+        title="Edit"
+        disabled={!!editingId}
+      >
+        ✏️
+      </button>
+      <button
+        type="button"
+        onClick={() => deleteReminder(reminder._id)}
+        aria-label="Delete"
+        title="Delete"
+        disabled={loadingId === reminder._id}
+      >
+        ❌
+      </button>
+    </div>
+  </div>
+)  : (
                 <form
-                  className="reminder-inline-edit"
-                  onSubmit={async (e) => {
-                    e.preventDefault();
-                    await saveEdit(reminder._id);
-                  }}
-                >
-                  <input
-                    type="text"
-                    required
-                    value={inlineEdit[reminder._id]?.title || ''}
-                    onChange={(e) =>
-                      handleEditChange(reminder._id, 'title', e.target.value)
-                    }
-                  />
-                  <input
-                    type="datetime-local"
-                    required
-                    value={inlineEdit[reminder._id]?.remindAt || ''}
-                    onChange={(e) =>
-                      handleEditChange(reminder._id, 'remindAt', e.target.value)
-                    }
-                  />
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={inlineEdit[reminder._id]?.isDone || false}
-                      onChange={(e) =>
-                        handleEditChange(
-                          reminder._id,
-                          'isDone',
-                          e.target.checked
-                        )
-                      }
-                    />
-                    Done
-                  </label>
-                  <button
-                    type="submit"
-                    className="save-btn"
-                    disabled={loadingId === reminder._id}
-                  >
-                    {loadingId === reminder._id ? 'Saving...' : 'Save'}
-                  </button>
-                  <button
-                    type="button"
-                    className="cancel-btn"
-                    onClick={() => cancelEdit(reminder._id)}
-                  >
-                    Cancel
-                  </button>
-                </form>
+  className="reminder-inline-edit"
+  onSubmit={async (e) => {
+    e.preventDefault();
+    await saveEdit(reminder._id);
+  }}
+>
+  <div className="edit-field">
+      <input
+        type="text"
+        required
+        value={inlineEdit[reminder._id]?.title || ''}
+        onChange={(e) =>
+          handleEditChange(reminder._id, 'title', e.target.value)
+        }
+      />
+  </div>
+  <div className="edit-field">
+    
+      <input
+        type="datetime-local"
+        required
+        value={inlineEdit[reminder._id]?.remindAt || ''}
+        onChange={(e) =>
+          handleEditChange(reminder._id, 'remindAt', e.target.value)
+        }
+      />
+
+  </div>
+  <div className="edit-field checkbox">
+        <label>
+          Completed  <input
+        type="checkbox"
+        checked={inlineEdit[reminder._id]?.isDone || false}
+        onChange={(e) =>
+          handleEditChange(reminder._id, 'isDone', e.target.checked)
+        }
+      />
+        </label>
+     
+  
+  </div>
+  <div className="edit-actions-row">
+    <button
+      type="submit"
+      className="save-btn"
+      disabled={loadingId === reminder._id}
+    >
+      {loadingId === reminder._id ? 'Saving...' : 'Save'}
+    </button>
+    <button
+      type="button"
+      className="cancel-btn"
+      onClick={() => cancelEdit(reminder._id)}
+    >
+      Cancel
+    </button>
+  </div>
+</form>
               )}
             </li>
           );
